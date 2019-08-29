@@ -1,4 +1,4 @@
 const { POM } = require('./lib')
-const { BaseObject } = require('./lib/base-object')
+const { BaseType } = require('./lib/base-type')
 
-module.exports = { POM, BaseObject }
+module.exports = { POM, BaseType }

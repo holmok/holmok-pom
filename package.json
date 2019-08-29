@@ -9,9 +9,9 @@
   ],
   "scripts": {
     "test:lint": "standard src/**/*.js",
-    "test:unit": "NODE_ENV=test tape tests/**/*.test.js | tap-spec",
+    "test:unit": "NODE_ENV=test tape tests/**/*.test.js tests/*.test.js | tap-spec",
     "test:coverage": "nyc --check-coverage --lines 100 --functions 100 --branches 100 --reporter=html --reporter=text --reporter=text-summary npm run test:unit",
-    "test": "npm run test:lint && npm run test:coverage"
+    "test": "DEBUG=pom:* npm run test:lint && npm run test:coverage"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
     "tape": "^4.11.0"
   },
   "dependencies": {
+    "debug": "^4.1.1",
     "memcached": "^2.2.2",
     "pg": "^7.12.1"
   }
