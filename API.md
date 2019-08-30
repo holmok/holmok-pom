@@ -27,7 +27,7 @@ Creates an instance of postgresql object mapper.
 
 ## Instance Methods
 
-### __pom.end()__
+### __pom.close()__
 ```javascript
 await pom.close()
 ```
@@ -83,20 +83,36 @@ class MyObject extends BaseType {
 }
 ```
 
-The default constructor is call called when registering types in the library
+The default constructor is call called when registering types in the library.
 
 ----
 
 ## Instance Methods
 
-### __pom.end()__
+### __pom.init(methods)__
 ```javascript
-await pom.close()
+const { BaseType } = require('pom')
+class MyObject extends BaseType {
+  async init(methods){
+    // do stuff
+  }
+  ...
+}
 ```
 
-Closes postgresql object mapper. Cleans up postgresql connection pool and memcached connections.
+An asynchronous function called when registering types in the library. Then `methods` parameter passed in gives raw access to postgresql and memcached via asynchronous helper methods.
 
-#### Returns
-Returns a promise to await close() to finish.
+#### Methods Parameter Functions
+All methods are promise based.
+| Method  | Parameter | Description | Resolves |
+|---|---|---|---|
+| query  | `sql`, `params`  | runs a `sql` query in postgresql with `params`   | postgresql results (from pg npm library)  |
+| touch  | `key`, `ttl`(seconds)  | touches item in cache at `key` resetting the ttl  | void  |
+| get  | `key`  |  fetches item in cache at `key` | item from cache  |
+| getMulti  | [`keys`]  | fetches items in cache from items in array of [`keys`] | items from cache  |
+| set  | `key`,`value`,`ttl`(seconds)  |  sets item in cache at `key` with ttl and value |  void |
+| del  | `key`  | deletes item in cache at `key`  |  void |
+| flush  |  n/a | removes all items from cache  |  void |
+
 
 ----
