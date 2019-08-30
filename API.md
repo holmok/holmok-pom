@@ -27,7 +27,7 @@ Creates an instance of postgresql object mapper.
 
 ## Instance Methods
 
-### __pom.close()__
+### __`pom.close()`__
 ```javascript
 await pom.close()
 ```
@@ -39,9 +39,9 @@ Returns a promise to await close() to finish.
 
 ----
 
-### __pom.register(...types)__
+### __`pom.register(...types)`__
 ```javascript
-pom.register(Type1, Type2, ... TypeN)
+pom.register(Type1, Type2, ...TypeN)
 ```
 
 Registers types for objects to be mapped in postgresql.
@@ -63,10 +63,7 @@ Will throw an error if any of the types are not an instance of [BaseType](#BaseT
 
 ```javascript
 const { BaseType } = require('pom')
-class MyObject extends BaseType {
-  async init(pom) {
-    // do stuff to initialize
-  }
+class MyType extends BaseType {
 }
 ```
 
@@ -74,7 +71,7 @@ class MyObject extends BaseType {
 
 ```javascript
 const { BaseType } = require('pom')
-class MyObject extends BaseType {
+class MyType extends BaseType {
   constructor(){
     super()
     // do stuff
@@ -89,10 +86,11 @@ The default constructor is call called when registering types in the library.
 
 ## Instance Methods
 
-### __pom.init(methods)__
+### __`type.init(methods)`__
 ```javascript
 const { BaseType } = require('pom')
-class MyObject extends BaseType {
+class MyType extends BaseType {
+  ...
   async init(methods){
     // do stuff
   }
@@ -102,17 +100,19 @@ class MyObject extends BaseType {
 
 An asynchronous function called when registering types in the library. Then `methods` parameter passed in gives raw access to postgresql and memcached via asynchronous helper methods.
 
-#### Methods Parameter Functions
+#### `methods` parameter
+
 All methods are promise based.
+
 | Method  | Parameter | Description | Resolves |
 |---|---|---|---|
-| query  | `sql`, `params`  | runs a `sql` query in postgresql with `params`   | postgresql results (from pg npm library)  |
-| touch  | `key`, `ttl`(seconds)  | touches item in cache at `key` resetting the ttl  | void  |
-| get  | `key`  |  fetches item in cache at `key` | item from cache  |
-| getMulti  | [`keys`]  | fetches items in cache from items in array of [`keys`] | items from cache  |
-| set  | `key`,`value`,`ttl`(seconds)  |  sets item in cache at `key` with ttl and value |  void |
-| del  | `key`  | deletes item in cache at `key`  |  void |
-| flush  |  n/a | removes all items from cache  |  void |
+| methods.query  | `sql`, `params`  | runs a `sql` query in postgresql with `params`   | postgresql results (from pg npm library)  |
+| methods.touch  | `key`, `ttl`(seconds)  | touches item in cache at `key` resetting the ttl  | void  |
+| methods.get  | `key`  |  fetches item in cache at `key` | item from cache  |
+| methods.getMulti  | [`keys`]  | fetches items in cache from items in array of [`keys`] | items from cache  |
+| methods.set  | `key`,`value`,`ttl`(seconds)  |  sets item in cache at `key` with ttl and value |  void |
+| methods.del  | `key`  | deletes item in cache at `key`  |  void |
+| methods.flush  |  n/a | removes all items from cache  |  void |
 
 
 ----
