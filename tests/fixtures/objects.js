@@ -1,7 +1,7 @@
 const { BaseType } = require('../..')
 
 class SimpleObject extends BaseType {
-  init () {
+  init (methods) {
     // do stuff
   }
 }
